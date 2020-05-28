@@ -1,0 +1,42 @@
+function start() {
+	worker();
+	timerId = setInterval(worker,10000);
+}
+
+function stop() {
+	clearInterval(timerId);
+}
+
+function worker() {
+var a_link = document.getElementsByClassName('link_sub_item');
+var ot = window.open(a_link[1].href);
+setTimeout(function(){
+sample_text = sample_text + '    ' + in_temperature[iter_num] + '    ' + out_temperature[iter_num] + '\n';
+var input_box = ot.document.getElementsByClassName('form-control');
+input_box[0].value = sample_text;
+console.log(input_box[0].value);
+console.log('iteration: ' + iter_num);
+var button = ot.document.getElementsByClassName('btn btn-default');
+//setTimeout(function(){
+button[0].click();
+//},2000);
+//ot.close(); //  <- 자동으로 화면 꺼지면 없어도 될 것 같다.
+if (iter_num >= 6) {
+	return;
+}
+iter_num++;
+}, 3000);
+}
+var out_temperature = [23,24,25,26,24,23,21];
+var in_temperature = [23.3,23.3,22.9,23.9,23.0,21.0,21.9];
+var iter_num = 0;
+var sample_text = '   23.0   24\n';
+start();
+setTimeout(stop,30000);
+
+//window.onload = function() {
+//	worker();
+//	setTimeout(stop, 30000);
+//}
+
+//https://offbyone.tistory.com/312 에서 실행 가능
